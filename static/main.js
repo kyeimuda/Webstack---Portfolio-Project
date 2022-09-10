@@ -14,7 +14,6 @@ $(document).ready(function() {
     var trimedWorkers;
     var btnField;
 
-
     
     $(".field").on("click", function() {
 	var fields = $(this).val();
@@ -29,6 +28,12 @@ $(document).ready(function() {
 		    pages = 1;
 		}
 		pageButton(pages, fields);
+
+		$(".pagerBTN").each(function(index){
+		    if ((index +1) == PAGE){
+			$(this).attr("id", "currentPage")
+		    }
+		});
 		
 		var trimStart = (PAGE - 1) * showPerPage;
 		var trimEnd = trimStart + showPerPage;
@@ -56,6 +61,8 @@ $(document).ready(function() {
 	    }
 
 	    $('.pagerBTN').on('click', function(){
+		$(".pagerBTN").removeAttr("id");
+		$(this).attr("id", "currentPage")
 		$(".workertab").remove();
 		$(".results h3").remove();
 		
@@ -107,6 +114,13 @@ $(document).ready(function() {
 			pages = 1;
 		    }
 		    pageButton(pages, fields);
+
+		    $(".pagerBTN").each(function(index){
+		    if ((index +1) == PAGE){
+			$(this).attr("id", "currentPage")
+		    }
+		    });
+		
 		
 		    var trimStart = (PAGE - 1) * showPerPage;
 		    var trimEnd = trimStart + showPerPage;
@@ -132,8 +146,10 @@ $(document).ready(function() {
 		}
 
 		$('.pagerBTN').on('click', function(){
-		$(".workertab").remove();
-		$(".results h3").remove();
+		    $(".pagerBTN").removeAttr("id");
+		    $(this).attr("id", "currentPage")
+		    $(".workertab").remove();
+		    $(".results h3").remove();
 		
 		PAGE = $(this).val();
 
@@ -177,6 +193,12 @@ $(document).ready(function() {
 			pages = 1;
 		    }
 		    pageButton(pages, fields);
+
+		    $(".pagerBTN").each(function(index){
+		    if ((index +1) == PAGE){
+			$(this).attr("id", "currentPage")
+		    }
+		    });
 		
 		    var trimStart = (PAGE - 1) * showPerPage;
 		    var trimEnd = trimStart + showPerPage;
@@ -201,8 +223,10 @@ $(document).ready(function() {
 		}
 
 		$('.pagerBTN').on('click', function(){
-		$(".workertab").remove();
-		$(".results h3").remove();
+		    $(".pagerBTN").removeAttr("id");
+		    $(this).attr("id", "currentPage")
+		    $(".workertab").remove();
+		    $(".results h3").remove();
 		
 		PAGE = $(this).val();
 
@@ -246,6 +270,12 @@ $(document).ready(function() {
 			pages = 1;
 		    }
 		    pageButton(pages, fields);
+
+		    $(".pagerBTN").each(function(index){
+		    if ((index +1) == PAGE){
+			$(this).attr("id", "currentPage")
+		    }
+		    });
 		
 		    var trimStart = (PAGE - 1) * showPerPage;
 		    var trimEnd = trimStart + showPerPage;
@@ -270,8 +300,10 @@ $(document).ready(function() {
 		}
 
 		$('.pagerBTN').on('click', function(){
-		$(".workertab").remove();
-		$(".results h3").remove();
+		    $(".pagerBTN").removeAttr("id");
+		    $(this).attr("id", "currentPage")
+		    $(".workertab").remove();
+		    $(".results h3").remove();
 		
 		PAGE = $(this).val();
 
@@ -314,6 +346,12 @@ $(document).ready(function() {
 			pages = 1;
 		    }
 		    pageButton(pages, fields);
+
+		    $(".pagerBTN").each(function(index){
+		    if ((index +1) == PAGE){
+			$(this).attr("id", "currentPage")
+		    }
+		    });
 		
 		    var trimStart = (PAGE - 1) * showPerPage;
 		    var trimEnd = trimStart + showPerPage;
@@ -338,8 +376,10 @@ $(document).ready(function() {
 		}
 
 		$('.pagerBTN').on('click', function(){
-		$(".workertab").remove();
-		$(".results h3").remove();
+		    $(".pagerBTN").removeAttr("id");
+		    $(this).attr("id", "currentPage")
+		    $(".workertab").remove();
+		    $(".results h3").remove();
 		
 		PAGE = $(this).val();
 
