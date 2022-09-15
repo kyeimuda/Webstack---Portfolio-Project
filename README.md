@@ -22,13 +22,13 @@ For this project I used some python modules and framework. I used
 ### Featues
 FEATURES:
 The Workerfy web application has some important features to note. The first feature to talk about is the home page. It actually serves as a route which divert you to either the explore page or worker account pages.
-![Home page!](/static/image/new_home.jpg "Home Page ")
+![Home page!](/static/image/new_home.jpg "new Home Page ")
 
 The next feature is the explore feature. On the explore page people finding workers can go through all the workers in the database and also search for workers by filtering either by location or work fields or location and work fields. The worker cards displayed contains pictures of the workers works for the client to see what kind of work the work can do and information to reach the worker if the client searching is interested in the worker. A new feature added to the explore page is the pagintion feature and a caching system  to reduce the load time of the application.
-![explore page!](/static/image/new_explore.jpg "explore Page ")
+![explore page!](/static/image/new_explore.jpg "new explore Page ")
 
 The third feature is the worker account page. With this feature workers can create accounts that will be displayed on the explore. Workers can also update their information anytime. A new feature added to this part is the authentication system that make the login system more reliable.
-![account page!](/static/image/account.jpg "new_account Page")
+![account page!](/static/image/new_account.jpg "new_account Page")
 
 ### Code example
 The main file handling the program is the workerfy.py file,. All the functions are simple to understand and are documented. 
