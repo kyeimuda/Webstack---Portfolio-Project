@@ -9,7 +9,7 @@ $(document).ready(function() {
 
     var Workers;
     var pages = 1;
-    var showPerPage = 3;
+    var showPerPage = 5;
     var PAGE = 1;
     var trimedWorkers;
     var btnField;
@@ -23,7 +23,7 @@ $(document).ready(function() {
 		$(".results h3").remove();
 		
 
-		pages = data.length /showPerPage
+		pages = Math.ceil(data.length /showPerPage)
 		if (pages < 1){
 		    pages = 1;
 		}
@@ -42,7 +42,7 @@ $(document).ready(function() {
 
 		
 		$.each(trimedWorkers, function(i, worker) {
-		    $('.results').append('<div class="workertab" id="WorkerTab"><div class="resultsinfo"><div class="pic"><div id="profileimg"><img src="image/profilepic/' + worker.username + '"></div></div><div class="about"><h3>Workerfy</h3><p id="username">Name: <br>' + worker.username + '</p><p id="workfield">Workfield :<br>' + worker.work_field + '</p><p id="location">Location:<br>' + worker.Location + '</p><p id="email">Email:<br>' + worker.email + '</p><p id="phone">phone:<br>' + worker.phone + '</p><p id="phone2">Phone2:<br>' + worker.phone2 + '</p><p id="description">About:<br>' + worker.description + '</p></div></div><div class="resultspics"><div class="smallimg"><img src="/image/image1/' + worker.username + '" class="smalImgs" data-imageId="fullone' + worker.id + '"><img src="/image/image2/' + worker.username + '" class="smallImgs" data-imageId="fullone' + worker.id + '"><img src="/image/image3/' + worker.username + '" class="smallImgs" data-imageId="fullone' + worker.id + '"><img src="/image/image4/' + worker.username + '" class="smallImgs" data-imageId="fullone' + worker.id + '"><img src="/image/image5/' + worker.username + '" class="smallImgs" data-imageId="fullone' + worker.id + '"></div><div class="fullimg"><img src="/image/image1/' + worker.username + '" id="fullone' + worker.id + '"></div></div></div>');
+ 		    $('.results').append('<div class="workertab" id="WorkerTab"><div class="resultsinfo"><div class="pic"><div id="profileimg"><img src="image/profilepic/' + worker.username + '"></div></div><div class="about"><h3>Workerfy</h3><p id="username">Name: <br>' + worker.username + '</p><p id="workfield">Workfield :<br>' + worker.work_field + '</p><p id="location">Location:<br>' + worker.Location + '</p><p id="email">Email:<br>' + worker.email + '</p><p id="phone">phone:<br>' + worker.phone + '</p><p id="phone2">Phone2:<br>' + worker.phone2 + '</p><p id="description">About:<br>' + worker.description + '</p></div></div><div class="resultspics"><div class="smallimg"><img src="/image/image1/' + worker.username + '" class="smalImgs" data-imageId="fullone' + worker.id + '"><img src="/image/image2/' + worker.username + '" class="smallImgs" data-imageId="fullone' + worker.id + '"><img src="/image/image3/' + worker.username + '" class="smallImgs" data-imageId="fullone' + worker.id + '"><img src="/image/image4/' + worker.username + '" class="smallImgs" data-imageId="fullone' + worker.id + '"><img src="/image/image5/' + worker.username + '" class="smallImgs" data-imageId="fullone' + worker.id + '"></div><div class="fullimg"><img src="/image/image1/' + worker.username + '" id="fullone' + worker.id + '"></div></div></div>');
 
 		    $(".smallImgs").on("click", function() {
 			var fullimg = $(this).attr("src");
@@ -68,7 +68,7 @@ $(document).ready(function() {
 		
 		PAGE = $(this).val();
 
-		pages = data.length /showPerPage
+		pages = Math.ceil(data.length /showPerPage)
 		if (pages < 1){
 		    pages = 1;
 		}
@@ -109,7 +109,7 @@ $(document).ready(function() {
 		    $(".workertab").remove();
 		    $(".results h3").remove();
 		    
-		    pages = data.length /showPerPage
+		    pages = Math.ceil(data.length /showPerPage)
 		    if (pages < 1){
 			pages = 1;
 		    }
@@ -153,7 +153,7 @@ $(document).ready(function() {
 		
 		PAGE = $(this).val();
 
-		pages = data.length /showPerPage
+		pages = Math.ceil(data.length /showPerPage)
 		if (pages < 1){
 		    pages = 1;
 		}
@@ -188,7 +188,7 @@ $(document).ready(function() {
 		    $(".workertab").remove();
 		    $(".results h3").remove();
 
-		    pages = data.length /showPerPage
+		    pages = Math.ceil(data.length /showPerPage)
 		    if (pages < 1){
 			pages = 1;
 		    }
@@ -230,7 +230,7 @@ $(document).ready(function() {
 		
 		PAGE = $(this).val();
 
-		pages = data.length /showPerPage
+		pages = Math.ceil(data.length /showPerPage)
 		if (pages < 1){
 		    pages = 1;
 		}
@@ -265,7 +265,7 @@ $(document).ready(function() {
 		    $(".workertab").remove();
 		    $(".results h3").remove();
 
-		    pages = data.length /showPerPage
+		    pages = Math.ceil(data.length /showPerPage)
 		    if (pages < 1){
 			pages = 1;
 		    }
@@ -307,7 +307,7 @@ $(document).ready(function() {
 		
 		PAGE = $(this).val();
 
-		pages = data.length /showPerPage
+		pages = Math.ceil(data.length /showPerPage)
 		if (pages < 1){
 		    pages = 1;
 		}
@@ -341,7 +341,7 @@ $(document).ready(function() {
 		    $(".workertab").remove();
 		    $(".results h3").remove();
 
-		    pages = data.length /showPerPage
+		    pages = Math.ceil(data.length /showPerPage)
 		    if (pages < 1){
 			pages = 1;
 		    }
@@ -383,7 +383,7 @@ $(document).ready(function() {
 		
 		PAGE = $(this).val();
 
-		pages = data.length /showPerPage
+		    pages = Math.ceil(data.length /showPerPage)
 		if (pages < 1){
 		    pages = 1;
 		}

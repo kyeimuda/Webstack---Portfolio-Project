@@ -12,6 +12,10 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_restful import Resource, Api, fields, marshal_with
+from sqlalchemy.sql.expression import func
+import redis
+import json
+import pickle
 
 
 app = Flask(__name__)
@@ -21,6 +25,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 api = Api(app)
 bcrypt = Bcrypt(app)
+r = redis.Redis()
 
 class workers(db.Model):
     """
@@ -479,12 +484,53 @@ def upload_image5(name):
 def explorepage():
     """ The explore page """
     from sqlalchemy.sql.expression import func
+    import math
 
-    page = request.args.get("page", 1, type = int)
+    lista = []
+    dicta = {}
+
+    if (r.get("explorePage") != None):
+        page = request.args.get("page", 1, type = int)
+        showPerPage = 4
+        
+        allWorkers = json.loads(r.get("explorePage"))
+        workersT = allWorkers["workers"]
+
+        pages = math.ceil(len(workersT) / showPerPage)
+
+        trimStart = (page - 1) * showPerPage
+        trimEnd = trimStart + showPerPage
+
+        trimmedWorkers = workersT[trimStart : trimEnd]
+
+        return render_template("explore.html", trimmedWorkers=trimmedWorkers, trimmedPage=page, trimmedpages=pages)
+        
+    else:
+        page = request.args.get("page", 1, type = int)
     
-    allWorkers = workers.query.order_by(func.random()).paginate(per_page=2)
+        allWorkers = workers.query.order_by(func.random()).paginate(per_page=5)
+        kers = workers.query.order_by(func.random())
+        for a in kers:
+            dicta = {
+                'id' : a.id,
+                'username' : a.username,
+                'work_field' : a.work_field,
+                'Location' : a.email,
+                'phone' : a.phone,
+                'phone2' : a.phone2,
+                'description' : a.description
+            }
+            lista.append(dicta)
+        
+        readyList = {
+            'workers' : lista
+        }
+        readyForRedis = json.dumps(readyList)
 
-    return render_template("explore.html", Allworkers=allWorkers)
+        r.set("explorePage", readyForRedis)
+        r.expire("explorePage", 1200)
+            
+        return render_template("explore.html", Allworkers=allWorkers)
 
 
 @app.route('/landingPage', strict_slashes=False)
@@ -517,7 +563,34 @@ resource_fields = {
 class filterByField(Resource):
     @marshal_with(resource_fields)
     def get(self, field):
-        Workers = workers.query.filter_by(work_field=field).all()
+        lista = []
+        dicta = {}
+        if (r.get(field) != None):
+            WorkerT = json.loads(r.get(field))
+            Workers = WorkerT["workers"]
+        else:
+            Workers = workers.query.filter_by(work_field=field).order_by(func.random()).all()
+            if Workers != None:
+                for a in Workers:
+                    dicta = {
+                        'id' : a.id,
+                        'username' : a.username,
+                        'work_field' : a.work_field,
+                        'Location' : a.email,
+                        'phone' : a.phone,
+                        'phone2' : a.phone2,
+                        'description' : a.description
+                    }
+                    lista.append(dicta)
+
+        
+                readyList = {
+                    'workers' : lista
+                }
+                readyForRedis = json.dumps(readyList)
+            
+                r.set(field, readyForRedis)
+                r.expire(field, 1200)
         return Workers
 
 
@@ -527,7 +600,34 @@ api.add_resource(filterByField, "/api/explore/workers/<string:field>")
 class filterByLocation(Resource):
     @marshal_with(resource_fields)
     def get(self, location):
-        Workers = workers.query.filter_by(Location=location).all()
+        lista = []
+        dicta = {}
+        if (r.get(location) != None):
+            WorkerT = json.loads(r.get(location))
+            Workers = WorkerT["workers"]
+        else:
+            Workers = workers.query.filter_by(Location=location).order_by(func.random()).all()
+            if Workers != None:
+                for a in Workers:
+                    dicta = {
+                        'id' : a.id,
+                        'username' : a.username,
+                        'work_field' : a.work_field,
+                        'Location' : a.email,
+                        'phone' : a.phone,
+                        'phone2' : a.phone2,
+                        'description' : a.description
+                    }
+                    lista.append(dicta)
+
+        
+                readyList = {
+                    'workers' : lista
+                }
+                readyForRedis = json.dumps(readyList)
+            
+                r.set(location, readyForRedis)
+                r.expire(location, 1200)
         return Workers
 
 
@@ -537,8 +637,36 @@ api.add_resource(filterByLocation, "/api/explore/workersLoc/<string:location>")
 class filterAll(Resource):
     @marshal_with(resource_fields)
     def get(self):
-        Workers = workers.query.all()
+        lista = []
+        dicta = {}
+        if (r.get("ALL") != None):
+            WorkerT = json.loads(r.get("ALL"))
+            Workers = WorkerT["workers"]
+        else:
+            Workers = workers.query.order_by(func.random()).all()
+            if Workers != None:
+                for a in Workers:
+                    dicta = {
+                        'id' : a.id,
+                        'username' : a.username,
+                        'work_field' : a.work_field,
+                        'Location' : a.email,
+                        'phone' : a.phone,
+                        'phone2' : a.phone2,
+                        'description' : a.description
+                    }
+                    lista.append(dicta)
+
+        
+                readyList = {
+                    'workers' : lista
+                }
+                readyForRedis = json.dumps(readyList)
+            
+                r.set("ALL", readyForRedis)
+                r.expire("ALL", 1200)
         return Workers
+
 
 
 api.add_resource(filterAll, "/api/explore/workers")
@@ -547,9 +675,36 @@ api.add_resource(filterAll, "/api/explore/workers")
 class filterByLnF(Resource):
     @marshal_with(resource_fields)
     def get(self, location, field):
-        Workers = workers.query.filter((workers.work_field == field)
-                                       & (workers.Location == location)).all()
+        lista = []
+        dicta = {}
+        if (r.get(location + field) != None):
+            WorkerT = json.loads(r.get(location + field))
+            Workers = WorkerT["workers"]
+        else:
+            Workers = workers.query.filter((workers.work_field == field) & (workers.Location == location)).order_by(func.random()).all()
+            if Workers != None:
+                for a in Workers:
+                    dicta = {
+                        'id' : a.id,
+                        'username' : a.username,
+                        'work_field' : a.work_field,
+                        'Location' : a.email,
+                        'phone' : a.phone,
+                        'phone2' : a.phone2,
+                        'description' : a.description
+                    }
+                    lista.append(dicta)
+
+        
+                readyList = {
+                    'workers' : lista
+                }
+                readyForRedis = json.dumps(readyList)
+            
+                r.set(location + field, readyForRedis)
+                r.expire(location + field, 1200)
         return Workers
+
 
 
 api.add_resource(filterByLnF,
